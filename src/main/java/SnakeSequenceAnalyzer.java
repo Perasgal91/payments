@@ -13,11 +13,13 @@ public class SnakeSequenceAnalyzer {
         this.sequence = sequence;
     }
 
-    public SnakeSequenceAnalyzer() {
-
-    }
-
     public String analyze() {
-        return null;
+
+        String result = "nothing yet";
+
+        for (char movementDirection : sequence) {
+            snake.update(movementDirection);
+        }
+        return result;
     }
 }
