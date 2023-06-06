@@ -19,6 +19,14 @@ public class Coordinate {
         this.column = column;
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -30,5 +38,13 @@ public class Coordinate {
     @Override
     public int hashCode() {
         return Objects.hash(row, column);
+    }
+
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "row=" + row +
+                ", column=" + column +
+                '}';
     }
 }

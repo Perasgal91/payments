@@ -22,23 +22,23 @@ class SnakeSequenceAnalyzerTest {
     private static final char[] sequence3 = {'r', 'r'}; // should hit out of bounds -> return "game over"
     private static final char[] sequence4 = {'u', 'l', 'l', 'u'}; // should hit wall (x) -> return "game over"
 
-//    @ParameterizedTest
-//    @MethodSource("provideParameters")
-//    public void evaluateSequence_givenInput_shouldOutput(char[][] board, char[] sequence, String expectedResult) {
-//
-//        SnakeSequenceAnalyzer snakeSequenceAnalyzer = new SnakeSequenceAnalyzer(board, sequence);
-//
-//        String result = snakeSequenceAnalyzer.analyze();
-//
-//        Assertions.assertEquals(expectedResult, result);
-//    }
-//
-//    private static Stream<Arguments> provideParameters() {
-//        return Stream.of(
-//                Arguments.of(board, sequence1, "food"),
-//                Arguments.of(board, sequence2, "game over"),
-//                Arguments.of(board, sequence3, "game over"),
-//                Arguments.of(board, sequence4, "game over")
-//        );
-//    }
+    @ParameterizedTest
+    @MethodSource("provideParameters")
+    public void evaluateSequence_givenInput_shouldOutput(char[][] board, char[] sequence, String expectedResult) {
+
+        SnakeSequenceAnalyzer snakeSequenceAnalyzer = new SnakeSequenceAnalyzer(board, sequence);
+
+        String result = snakeSequenceAnalyzer.analyze();
+
+        Assertions.assertEquals(expectedResult, result);
+    }
+
+    private static Stream<Arguments> provideParameters() {
+        return Stream.of(
+                Arguments.of(board, sequence1, "food"),
+                Arguments.of(board, sequence2, "game over"),
+                Arguments.of(board, sequence3, "game over"),
+                Arguments.of(board, sequence4, "game over")
+        );
+    }
 }
