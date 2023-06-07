@@ -2,6 +2,8 @@ package dog;
 
 import common.Coordinate;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,23 @@ public class DogAndBonePath {
         List<Coordinate> bones = new ArrayList<>();
         findDogsAndBones(dogs, bones);
         return findShortestPath(dogs, bones);
+    }
+
+    public BigDecimal averagePath() {
+        List<Coordinate> dogs = new ArrayList<>();
+        List<Coordinate> bones = new ArrayList<>();
+        findDogsAndBones(dogs, bones);
+        return BigDecimal.valueOf(findAveragePath(dogs, bones)).setScale(2, RoundingMode.FLOOR);
+    }
+
+    private double findAveragePath(List<Coordinate> dogs, List<Coordinate> bones) {
+        List<Integer> distances = new ArrayList<>();
+        for (Coordinate dog : dogs) {
+            for (Coordinate bone : bones) {
+                distances.add(calculateDistance(dog, bone));
+            }
+        }
+        return distances.stream().mapToDouble(d -> d).average().orElse(0.0);
     }
 
     private int findLongestPath(List<Coordinate> dogs, List<Coordinate> bones) {
