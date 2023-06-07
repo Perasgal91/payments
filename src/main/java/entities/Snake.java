@@ -3,7 +3,7 @@ package entities;
 import java.util.*;
 
 public class Snake {
-    private List<Coordinate> body;
+    private final List<Coordinate> body;
 
     private List<Coordinate> previousBody;
 
@@ -34,7 +34,7 @@ public class Snake {
 
     private static void setHead(Board board, Snake snake) {
         int rowNumber = -1;
-        int columnNumber = -1;
+        int columnNumber;
         for (char[] row : board.getStructure()) {
             rowNumber++;
             columnNumber = -1;
@@ -77,7 +77,7 @@ public class Snake {
 
         updatePreviousBody();
 
-        Coordinate newHead = null;
+        Coordinate newHead;
         switch (movementDirection) {
             case 'u':
                 newHead = getNewHead(-1, 0);

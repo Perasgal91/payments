@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Board {
-    private char[][] structure;
+    private final char[][] structure;
 
     private String status;
 
@@ -65,13 +65,13 @@ public class Board {
         if (this == o) return true;
         if (!(o instanceof Board)) return false;
         Board board = (Board) o;
-        return Arrays.equals(structure, board.structure) && Objects.equals(status, board.status);
+        return Arrays.deepEquals(structure, board.structure) && Objects.equals(status, board.status);
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hash(status);
-        result = 31 * result + Arrays.hashCode(structure);
+        result = 31 * result + Arrays.deepHashCode(structure);
         return result;
     }
 }

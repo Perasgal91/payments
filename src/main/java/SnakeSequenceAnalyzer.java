@@ -1,13 +1,11 @@
 import entities.Board;
 import entities.Snake;
 
-import java.util.Objects;
-
 public class SnakeSequenceAnalyzer {
-    private Board board;
-    private Snake snake;
+    private final Board board;
+    private final Snake snake;
 
-    private char[] sequence;
+    private final char[] sequence;
 
     public SnakeSequenceAnalyzer(char[][] board, char[] sequence) {
         this.board = new Board(board);
