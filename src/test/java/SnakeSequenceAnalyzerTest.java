@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SnakeSequenceAnalyzerTest {
 
-    private static final char[][] board = {
+    private static char[][] board = {
             {'-', '-', 'x', '-', '-', '-'},
             {'-', '-', 'x', '-', 'f', '-'},
             {'-', '-', '-', '-', '-', '-'},
@@ -23,8 +23,9 @@ class SnakeSequenceAnalyzerTest {
     private static final char[] sequence4 = {'u', 'l', 'l', 'u'}; // should hit wall (x) -> return "game over"
 
     @ParameterizedTest
-    @MethodSource("provideParameters")
-    public void evaluateSequence_givenInput_shouldOutput(char[][] board, char[] sequence, String expectedResult) {
+    @MethodSource("provideSequences")
+    public void evaluateSequence_givenInput_shouldOutput(char[] sequence, String expectedResult) {
+        resetBoard();
 
         SnakeSequenceAnalyzer snakeSequenceAnalyzer = new SnakeSequenceAnalyzer(board, sequence);
 
@@ -33,12 +34,22 @@ class SnakeSequenceAnalyzerTest {
         Assertions.assertEquals(expectedResult, result);
     }
 
-    private static Stream<Arguments> provideParameters() {
+    private void resetBoard() {
+        board = new char[][]{
+                {'-', '-', 'x', '-', '-', '-'},
+                {'-', '-', 'x', '-', 'f', '-'},
+                {'-', '-', '-', '-', '-', '-'},
+                {'-', '-', 's', 's', 'S', '-'},
+                {'-', '-', 'x', 'x', 'x', '-'},
+                {'-', '-', '-', '-', '-', '-'}};
+    }
+
+    private static Stream<Arguments> provideSequences() {
         return Stream.of(
-                Arguments.of(board, sequence1, "food"),
-                Arguments.of(board, sequence2, "game over"),
-                Arguments.of(board, sequence3, "game over"),
-                Arguments.of(board, sequence4, "game over")
+                Arguments.of(sequence1, "food"),
+                Arguments.of(sequence2, "game over"),
+                Arguments.of(sequence3, "game over"),
+                Arguments.of(sequence4, "game over")
         );
     }
 }

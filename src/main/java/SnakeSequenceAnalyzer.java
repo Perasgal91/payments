@@ -1,6 +1,8 @@
 import entities.Board;
 import entities.Snake;
 
+import java.util.Objects;
+
 public class SnakeSequenceAnalyzer {
     private Board board;
     private Snake snake;
@@ -14,12 +16,12 @@ public class SnakeSequenceAnalyzer {
     }
 
     public String analyze() {
-
-        String result = "nothing yet";
-
         for (char movementDirection : sequence) {
-            snake.update(movementDirection);
+            if (!"game over".equals(board.getStatus())) {
+                snake.update(movementDirection);
+                board.update(snake.getBody(), snake.getPreviousBody());
+            }
         }
-        return result;
+        return board.getStatus();
     }
 }

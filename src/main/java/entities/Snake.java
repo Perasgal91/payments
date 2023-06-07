@@ -3,15 +3,22 @@ package entities;
 import java.util.*;
 
 public class Snake {
-    private final List<Coordinate> body;
+    private List<Coordinate> body;
+
+    private List<Coordinate> previousBody;
 
     public Snake() {
         body = new ArrayList<>();
+        previousBody = new ArrayList<>();
     }
 
 
     public List<Coordinate> getBody() {
         return body;
+    }
+
+    public List<Coordinate> getPreviousBody() {
+        return previousBody;
     }
 
     public void addBodyCoordinate(Coordinate coordinate) {
@@ -23,6 +30,21 @@ public class Snake {
         setHead(board, snake);
         setBody(board, snake);
         return snake;
+    }
+
+    private static void setHead(Board board, Snake snake) {
+        int rowNumber = -1;
+        int columnNumber = -1;
+        for (char[] row : board.getStructure()) {
+            rowNumber++;
+            columnNumber = -1;
+            for (char character : row) {
+                columnNumber++;
+                if (character == 'S') {
+                    snake.addBodyCoordinate(new Coordinate(rowNumber, columnNumber));
+                }
+            }
+        }
     }
 
     private static void setBody(Board board, Snake snake) {
@@ -50,22 +72,11 @@ public class Snake {
         }
     }
 
-    private static void setHead(Board board, Snake snake) {
-        int rowNumber = -1;
-        int columnNumber = -1;
-        for (char[] row : board.getStructure()) {
-            rowNumber++;
-            columnNumber = -1;
-            for (char character : row) {
-                columnNumber++;
-                if (character == 'S') {
-                    snake.addBodyCoordinate(new Coordinate(rowNumber, columnNumber));
-                }
-            }
-        }
-    }
 
     public void update(char movementDirection) {
+
+        updatePreviousBody();
+
         Coordinate newHead = null;
         switch (movementDirection) {
             case 'u':
@@ -93,6 +104,10 @@ public class Snake {
                 }
                 break;
         }
+    }
+
+    private void updatePreviousBody() {
+        previousBody = new ArrayList<>(body);
     }
 
     private void moveCoordinates(Coordinate newHead) {
