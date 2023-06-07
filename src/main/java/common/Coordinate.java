@@ -1,4 +1,4 @@
-package snake.entities;
+package common;
 
 import java.util.Objects;
 

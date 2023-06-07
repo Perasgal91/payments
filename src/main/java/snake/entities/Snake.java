@@ -1,5 +1,7 @@
 package snake.entities;
 
+import common.Coordinate;
+
 import java.util.*;
 
 public class Snake {
