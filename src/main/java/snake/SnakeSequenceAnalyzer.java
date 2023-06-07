@@ -1,10 +1,11 @@
-import entities.Board;
-import entities.Snake;
+package snake;
+
+import snake.entities.Board;
+import snake.entities.Snake;
 
 public class SnakeSequenceAnalyzer {
     private final Board board;
     private final Snake snake;
-
     private final char[] sequence;
 
     public SnakeSequenceAnalyzer(char[][] board, char[] sequence) {

@@ -1,4 +1,4 @@
-package entities;
+package snake.entities;
 
 import java.util.Arrays;
 import java.util.List;
