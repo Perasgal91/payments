@@ -23,14 +23,31 @@ public class DogAndBonePath {
         return findLongestPath(dogs, bones);
     }
 
+    public int shortestPath() {
+        List<Coordinate> dogs = new ArrayList<>();
+        List<Coordinate> bones = new ArrayList<>();
+        findDogsAndBones(dogs, bones);
+        return findShortestPath(dogs, bones);
+    }
+
     private int findLongestPath(List<Coordinate> dogs, List<Coordinate> bones) {
-        int maxDistance = 0;
+        int maxDistance = Integer.MIN_VALUE;
         for (Coordinate dog : dogs) {
             for (Coordinate bone : bones) {
                 maxDistance = Math.max(maxDistance, calculateDistance(dog, bone));
             }
         }
         return maxDistance;
+    }
+
+    private int findShortestPath(List<Coordinate> dogs, List<Coordinate> bones) {
+        int minDistance = Integer.MAX_VALUE;
+        for (Coordinate dog : dogs) {
+            for (Coordinate bone : bones) {
+                minDistance = Math.min(minDistance, calculateDistance(dog, bone));
+            }
+        }
+        return minDistance;
     }
 
     private int calculateDistance(Coordinate dog, Coordinate bone) {
