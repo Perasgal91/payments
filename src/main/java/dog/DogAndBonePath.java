@@ -5,7 +5,9 @@ import common.Coordinate;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 // Assumption
 // I do not remember what the exercise was, given the title (Dog & Bone) and the fact that it´s supposed to be
@@ -13,33 +15,27 @@ import java.util.List;
 // Given there are multiple dogs and one bones (might do multiple bones after)
 public class DogAndBonePath {
     private final char[][] matrix;
+    private final Set<Coordinate> dogs = new HashSet<>();
+    private final Set<Coordinate> bones = new HashSet<>();
 
     public DogAndBonePath(char[][] matrix) {
         this.matrix = matrix;
+        findDogsAndBones();
     }
 
     public int longestPath() {
-        List<Coordinate> dogs = new ArrayList<>();
-        List<Coordinate> bones = new ArrayList<>();
-        findDogsAndBones(dogs, bones);
-        return findLongestPath(dogs, bones);
+        return findLongestPath();
     }
 
     public int shortestPath() {
-        List<Coordinate> dogs = new ArrayList<>();
-        List<Coordinate> bones = new ArrayList<>();
-        findDogsAndBones(dogs, bones);
-        return findShortestPath(dogs, bones);
+        return findShortestPath();
     }
 
     public BigDecimal averagePath() {
-        List<Coordinate> dogs = new ArrayList<>();
-        List<Coordinate> bones = new ArrayList<>();
-        findDogsAndBones(dogs, bones);
-        return BigDecimal.valueOf(findAveragePath(dogs, bones)).setScale(2, RoundingMode.FLOOR);
+        return BigDecimal.valueOf(findAveragePath()).setScale(2, RoundingMode.FLOOR);
     }
 
-    private double findAveragePath(List<Coordinate> dogs, List<Coordinate> bones) {
+    private double findAveragePath() {
         List<Integer> distances = new ArrayList<>();
         for (Coordinate dog : dogs) {
             for (Coordinate bone : bones) {
@@ -49,7 +45,7 @@ public class DogAndBonePath {
         return distances.stream().mapToDouble(d -> d).average().orElse(0.0);
     }
 
-    private int findLongestPath(List<Coordinate> dogs, List<Coordinate> bones) {
+    private int findLongestPath() {
         int maxDistance = Integer.MIN_VALUE;
         for (Coordinate dog : dogs) {
             for (Coordinate bone : bones) {
@@ -59,7 +55,7 @@ public class DogAndBonePath {
         return maxDistance;
     }
 
-    private int findShortestPath(List<Coordinate> dogs, List<Coordinate> bones) {
+    private int findShortestPath() {
         int minDistance = Integer.MAX_VALUE;
         for (Coordinate dog : dogs) {
             for (Coordinate bone : bones) {
@@ -75,7 +71,7 @@ public class DogAndBonePath {
         return upDownMovements + leftRightMovements;
     }
 
-    private void findDogsAndBones(List<Coordinate> dogs, List<Coordinate> bones) {
+    private void findDogsAndBones() {
         int rowNumber = -1;
         int columnNumber;
         for (char[] row : matrix) {
