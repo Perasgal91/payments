@@ -24,6 +24,10 @@ public class Board {
     }
 
     public void update(List<Coordinate> body, List<Coordinate> previousBody) {
+        if(previousBody.contains(body.get(0))){
+            status = "game over";
+            return;
+        }
         for (Coordinate previousCoordinate : previousBody) {
             structure[previousCoordinate.getRow()][previousCoordinate.getColumn()] = '-';
         }

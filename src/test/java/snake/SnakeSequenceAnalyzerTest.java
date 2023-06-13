@@ -8,17 +8,12 @@ import java.util.stream.Stream;
 
 class SnakeSequenceAnalyzerTest {
 
-    private static char[][] board = {
-            {'-', '-', 'x', '-', '-', '-'},
-            {'-', '-', 'x', '-', 'f', '-'},
-            {'-', '-', '-', '-', '-', '-'},
-            {'-', '-', 's', 's', 'S', '-'},
-            {'-', '-', 'x', 'x', 'x', '-'},
-            {'-', '-', '-', '-', '-', '-'}};
+    private static char[][] board = null;
     private static final char[] sequence1 = {'u', 'u'}; // should hit food -> return "food"
     private static final char[] sequence2 = {'d'}; // should hit wall (x) -> return "game over"
     private static final char[] sequence3 = {'r', 'r'}; // should hit out of bounds -> return "game over"
     private static final char[] sequence4 = {'u', 'l', 'l', 'u'}; // should hit wall (x) -> return "game over"
+    private static final char[] sequence5 = {'u', 'l', 'd'}; // should hit snake body (s) -> return "game over"
 
     @ParameterizedTest
     @MethodSource("provideSequences")
@@ -37,7 +32,7 @@ class SnakeSequenceAnalyzerTest {
                 {'-', '-', 'x', '-', '-', '-'},
                 {'-', '-', 'x', '-', 'f', '-'},
                 {'-', '-', '-', '-', '-', '-'},
-                {'-', '-', 's', 's', 'S', '-'},
+                {'-', 's', 's', 's', 'S', '-'},
                 {'-', '-', 'x', 'x', 'x', '-'},
                 {'-', '-', '-', '-', '-', '-'}};
     }
@@ -47,7 +42,8 @@ class SnakeSequenceAnalyzerTest {
                 Arguments.of(sequence1, "food"),
                 Arguments.of(sequence2, "game over"),
                 Arguments.of(sequence3, "game over"),
-                Arguments.of(sequence4, "game over")
+                Arguments.of(sequence4, "game over"),
+                Arguments.of(sequence5, "game over")
         );
     }
 }
