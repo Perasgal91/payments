@@ -24,7 +24,7 @@ public class Board {
     }
 
     public void update(List<Coordinate> body, List<Coordinate> previousBody) {
-        if(previousBody.contains(body.get(0))){
+        if (previousBody.contains(body.get(0))) {
             status = "game over";
             return;
         }
@@ -36,7 +36,7 @@ public class Board {
             if (isHeadMovement) {
                 changeStatus(newCoordinate);
             }
-            if(status.equals("no change") || status.equals("food")) {
+            if (status.equals("no change") || status.equals("food")) {
                 structure[newCoordinate.getRow()][newCoordinate.getColumn()] = isHeadMovement ? 'S' : 's';
             }
             isHeadMovement = false;
@@ -44,7 +44,9 @@ public class Board {
     }
 
     private void changeStatus(Coordinate newCoordinate) {
-        try {
+        if (structure.length <= newCoordinate.getRow() || structure[0].length <= newCoordinate.getColumn()) {
+            status = "game over";
+        } else {
             var currentValueOnCoordinate = structure[newCoordinate.getRow()][newCoordinate.getColumn()];
             if (currentValueOnCoordinate == 'x') {
                 status = "game over";
@@ -53,8 +55,6 @@ public class Board {
             } else if (currentValueOnCoordinate == '-') {
                 status = "no change";
             }
-        } catch (IndexOutOfBoundsException e) {
-            status = "game over";
         }
     }
 
