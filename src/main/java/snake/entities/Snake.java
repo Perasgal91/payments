@@ -9,11 +9,11 @@ public class Snake {
 
     private List<Coordinate> previousBody;
 
-    public Snake() {
+    public Snake(Board board) {
         body = new ArrayList<>();
         previousBody = new ArrayList<>();
+        generateInitialSnake(board);
     }
-
 
     public List<Coordinate> getBody() {
         return body;
@@ -27,14 +27,14 @@ public class Snake {
         body.add(coordinate);
     }
 
-    public static Snake generateInitialSnake(Board board) {
-        Snake snake = new Snake();
-        setHead(board, snake);
-        setBody(board, snake);
-        return snake;
+    private void generateInitialSnake(Board board) {
+        if(board != null) {
+            setHead(board);
+            setBody(board);
+        }
     }
 
-    private static void setHead(Board board, Snake snake) {
+    private void setHead(Board board) {
         int rowNumber = -1;
         int columnNumber;
         for (char[] row : board.getStructure()) {
@@ -43,34 +43,34 @@ public class Snake {
             for (char character : row) {
                 columnNumber++;
                 if (character == 'S') {
-                    snake.addBodyCoordinate(new Coordinate(rowNumber, columnNumber));
+                    addBodyCoordinate(new Coordinate(rowNumber, columnNumber));
                 }
             }
         }
     }
 
-    private static void setBody(Board board, Snake snake) {
-        Optional<Coordinate> head = snake.getBody().stream().findFirst();
-        head.ifPresent(coordinate -> findAndAddPreviousBodyCoordinate(board, coordinate, snake, '0'));
+    private void setBody(Board board) {
+        Optional<Coordinate> head = body.stream().findFirst();
+        head.ifPresent(coordinate -> findAndAddPreviousBodyCoordinate(board, coordinate, '0'));
     }
 
-    private static void findAndAddPreviousBodyCoordinate(Board board, Coordinate head, Snake snake, char previousMovement) {
+    private void findAndAddPreviousBodyCoordinate(Board board, Coordinate head, char previousMovement) {
         if (previousMovement != 'd' && board.getStructure()[head.getRow() - 1][head.getColumn()] == 's') { //up
             Coordinate coordinateToAdd = new Coordinate(head.getRow() - 1, head.getColumn());
-            snake.addBodyCoordinate(coordinateToAdd);
-            findAndAddPreviousBodyCoordinate(board, coordinateToAdd, snake, 'u');
+            addBodyCoordinate(coordinateToAdd);
+            findAndAddPreviousBodyCoordinate(board, coordinateToAdd, 'u');
         } else if (previousMovement != 'u' && board.getStructure()[head.getRow() + 1][head.getColumn()] == 's') { // down
             Coordinate coordinateToAdd = new Coordinate(head.getRow() + 1, head.getColumn());
-            snake.addBodyCoordinate(coordinateToAdd);
-            findAndAddPreviousBodyCoordinate(board, coordinateToAdd, snake, 'd');
+            addBodyCoordinate(coordinateToAdd);
+            findAndAddPreviousBodyCoordinate(board, coordinateToAdd, 'd');
         } else if (previousMovement != 'r' && board.getStructure()[head.getRow()][head.getColumn() - 1] == 's') { //left
             Coordinate coordinateToAdd = new Coordinate(head.getRow(), head.getColumn() - 1);
-            snake.addBodyCoordinate(coordinateToAdd);
-            findAndAddPreviousBodyCoordinate(board, coordinateToAdd, snake, 'l');
+            addBodyCoordinate(coordinateToAdd);
+            findAndAddPreviousBodyCoordinate(board, coordinateToAdd, 'l');
         } else if (previousMovement != 'l' && board.getStructure()[head.getRow()][head.getColumn() + 1] == 's') { //right
             Coordinate coordinateToAdd = new Coordinate(head.getRow(), head.getColumn() + 1);
-            snake.addBodyCoordinate(coordinateToAdd);
-            findAndAddPreviousBodyCoordinate(board, coordinateToAdd, snake, 'r');
+            addBodyCoordinate(coordinateToAdd);
+            findAndAddPreviousBodyCoordinate(board, coordinateToAdd, 'r');
         }
     }
 

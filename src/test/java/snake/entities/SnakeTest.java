@@ -14,7 +14,7 @@ class SnakeTest {
 
     @Test
     public void addCoordinate_givenNoCoordinate_shouldContainNewCoordinate() {
-        Snake snake = new Snake();
+        Snake snake = new Snake(null);
         snake.addBodyCoordinate(new Coordinate(1, 1));
 
         Assertions.assertEquals(new Coordinate(1, 1), snake.getBody().stream().findFirst().get());
@@ -22,7 +22,7 @@ class SnakeTest {
 
     @Test
     public void addCoordinate_givenPreviousCoordinates_shouldContainNewCoordinateAtTheEnd() {
-        Snake snake = new Snake();
+        Snake snake = new Snake(null);
         snake.addBodyCoordinate(new Coordinate(1, 1));
         snake.addBodyCoordinate(new Coordinate(2, 2));
         snake.addBodyCoordinate(new Coordinate(3, 3));
@@ -43,7 +43,7 @@ class SnakeTest {
     @Test
     public void generateSnake_givenBoard_shouldGenerateSnakeCoordinates() {
         Board board = new Board(boardArray);
-        Snake snake = Snake.generateInitialSnake(board);
+        Snake snake = new Snake(board);
 
         List<Coordinate> expectedBody = new ArrayList<>(
                 Arrays.asList(new Coordinate(3, 4), new Coordinate(3, 3), new Coordinate(3, 2)));
@@ -55,7 +55,7 @@ class SnakeTest {
     @MethodSource("provideDirections")
     public void update_givenSnakeAndDirection_shouldUpdateCoordinates(char direction, List<Coordinate> expectedBody) {
         Board board = new Board(boardArray);
-        Snake snake = Snake.generateInitialSnake(board);
+        Snake snake = new Snake(board);
 
         snake.update(direction);
 

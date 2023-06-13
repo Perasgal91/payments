@@ -10,7 +10,7 @@ public class SnakeSequenceAnalyzer {
 
     public SnakeSequenceAnalyzer(char[][] board, char[] sequence) {
         this.board = new Board(board);
-        this.snake = Snake.generateInitialSnake(this.board);
+        this.snake = new Snake(this.board);
         this.sequence = sequence;
     }
 
