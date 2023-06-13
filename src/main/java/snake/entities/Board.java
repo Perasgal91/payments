@@ -31,15 +31,15 @@ public class Board {
         for (Coordinate previousCoordinate : previousBody) {
             structure[previousCoordinate.getRow()][previousCoordinate.getColumn()] = '-';
         }
-        boolean firstTime = true;
+        boolean isHeadMovement = true;
         for (Coordinate newCoordinate : body) {
-            if (firstTime) {
+            if (isHeadMovement) {
                 changeStatus(newCoordinate);
             }
             if(status.equals("no change") || status.equals("food")) {
-                structure[newCoordinate.getRow()][newCoordinate.getColumn()] = firstTime ? 'S' : 's';
+                structure[newCoordinate.getRow()][newCoordinate.getColumn()] = isHeadMovement ? 'S' : 's';
             }
-            firstTime = false;
+            isHeadMovement = false;
         }
     }
 
