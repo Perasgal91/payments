@@ -44,6 +44,7 @@ public class Snake {
                 columnNumber++;
                 if (character == 'S') {
                     addBodyCoordinate(new Coordinate(rowNumber, columnNumber));
+                    return;
                 }
             }
         }
