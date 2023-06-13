@@ -56,13 +56,13 @@ public class DogAndBonePath {
     }
 
     private int findShortestPath() {
-        int minDistance = Integer.MAX_VALUE;
+        List<Integer> minDistances = new ArrayList<>();
         for (Coordinate dog : dogs) {
             for (Coordinate bone : bones) {
-                minDistance = Math.min(minDistance, calculateDistance(dog, bone));
+                minDistances.add(calculateDistance(dog, bone));
             }
         }
-        return minDistance;
+        return minDistances.stream().reduce(Integer.MAX_VALUE, Math::min);
     }
 
     private int calculateDistance(Coordinate dog, Coordinate bone) {
